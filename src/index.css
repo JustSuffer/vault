@@ -46,7 +46,13 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-romantic: linear-gradient(135deg, hsl(340 82% 52%) 0%, hsl(200 100% 85%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(340 100% 98%) 0%, hsl(340 60% 96%) 100%);
-    --gradient-text-light: linear-gradient(135deg, hsl(200 100% 40%) 0%, hsl(340 82% 52%) 100%);
+    /* Light text gradient: light blue → hot pink */
+    --gradient-text-light: linear-gradient(135deg, hsl(var(--wedding-blue)) 0%, hsl(var(--wedding-pink)) 100%);
+    /* Mid gray and gradients for light theme buttons */
+    --wedding-gray-mid: 0 0% 70%;
+    --gradient-white-gray-gold: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(var(--wedding-gray-mid)) 50%, hsl(45 100% 70%) 100%);
+    /* Light button gradient: light blue → hot pink (softened opacity) */
+    --gradient-light-blue-hot-pink: linear-gradient(135deg, hsl(var(--wedding-blue) / 0.85) 0%, hsl(var(--wedding-pink) / 0.85) 100%);
 
     --radius: 1rem;
 
@@ -103,11 +109,16 @@ All colors MUST be HSL.
     --wedding-gray: 0 0% 25%;
     --wedding-light: 30 20% 95%;
     --wedding-gold: 45 100% 70%;
+    /* Mid gray for gradients */
+    --wedding-gray-mid: 0 0% 70%;
+    /* Elegant button gradient: white → gray → gold (softened opacity) */
+    --gradient-white-gray-gold: linear-gradient(135deg, hsl(0 0% 100% / 0.85) 0%, hsl(0 0% 70% / 0.75) 50%, hsl(45 100% 70% / 0.85) 100%);
     
     /* Dark gradients */
     --gradient-romantic: linear-gradient(135deg, hsl(30 25% 20%) 0%, hsl(0 0% 15%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(30 15% 8%) 0%, hsl(30 20% 12%) 100%);
-    --gradient-text-dark: linear-gradient(135deg, hsl(0 0% 8%) 0%, hsl(45 100% 70%) 100%);
+    /* Dark text gradient: from white to wedding gold */
+    --gradient-text-dark: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(45 100% 70%) 100%);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -140,7 +151,7 @@ All colors MUST be HSL.
   }
   
   .upload-area {
-    @apply border-2 border-dashed border-border rounded-2xl p-8 transition-all duration-300;
+    @apply border-2 border-dashed border-border rounded-2xl p-5 sm:p-8 transition-all duration-300;
     @apply hover:border-primary/50 hover:bg-accent/20;
   }
   
@@ -178,6 +189,77 @@ All colors MUST be HSL.
     background-clip: text;
   }
   
+  /* Dark theme gradient button styling: white → gray → gold */
+  .gradient-button-dark {
+    background: var(--gradient-white-gray-gold);
+    color: hsl(30 15% 8%);
+    transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    box-shadow: 0 1px 8px hsl(45 100% 70% / 0.12);
+  }
+  .gradient-button-dark:hover {
+    filter: brightness(1.04);
+    box-shadow: 0 3px 14px hsl(45 100% 70% / 0.2);
+  }
+
+  /* Light theme gradient button styling: light blue → hot pink */
+  .gradient-button-light {
+    background: var(--gradient-light-blue-hot-pink);
+    color: hsl(200 30% 20%);
+    transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    box-shadow: 0 1px 8px hsl(340 82% 52% / 0.12);
+  }
+  .gradient-button-light:hover {
+    filter: brightness(1.04);
+    box-shadow: 0 3px 14px hsl(340 82% 52% / 0.18);
+  }
+  
+  /* Language switch container and button states */
+  .lang-switch-container {
+    background: hsl(0 0% 100% / 0.4);
+    border: 1px solid hsl(0 0% 80% / 0.2);
+    backdrop-filter: blur(4px);
+  }
+  .dark .lang-switch-container {
+    background: hsl(0 0% 100% / 0.08);
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    backdrop-filter: blur(4px);
+  }
+
+  .lang-btn-base {
+    border: 0;
+    transition: background 200ms ease, color 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+    box-shadow: none;
+  }
+  .lang-btn-base:hover {
+    filter: brightness(1.03);
+    color: hsl(200 100% 40%);
+  }
+  .dark .lang-btn-base:hover {
+    color: hsl(0 0% 100%);
+  }
+  /* Light theme: active subtle blue, inactive slightly darkened */
+  .lang-btn-active-light {
+    background: linear-gradient(135deg, hsl(var(--wedding-blue) / 0.25) 0%, hsl(var(--wedding-pink) / 0.15) 100%);
+    color: hsl(200 30% 22%);
+    box-shadow: 0 1px 6px hsl(200 100% 40% / 0.12);
+  }
+  .lang-btn-inactive-light {
+    background: hsl(0 0% 96% / 0.7);
+    color: hsl(200 15% 35%);
+    filter: saturate(0.9) brightness(0.97);
+  }
+  /* Dark theme: active subtle gold, inactive slightly whitened */
+  .lang-btn-active-dark {
+    background: linear-gradient(135deg, hsl(45 100% 65% / 0.85) 0%, hsl(45 100% 75% / 0.85) 100%);
+    color: hsl(30 15% 8%);
+    box-shadow: 0 1px 6px hsl(45 100% 70% / 0.14);
+  }
+  .lang-btn-inactive-dark {
+    background: linear-gradient(135deg, hsl(0 0% 26% / 0.35) 0%, hsl(0 0% 34% / 0.35) 100%);
+    color: hsl(0 0% 90% / 0.85);
+    filter: saturate(0.9) brightness(1.02);
+  }
+  
   .floral-background {
     background-image: url('/src/assets/floral-background.jpg');
     background-size: cover;
@@ -192,4 +274,18 @@ All colors MUST be HSL.
   25% { transform: translateY(-8px) rotate(1deg) translateX(3px); }
   50% { transform: translateY(-15px) rotate(-1deg) translateX(-2px); }
   75% { transform: translateY(-5px) rotate(2deg) translateX(4px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); }
+  33% { transform: translateY(-6px) rotate(0.5deg) translateX(2px); }
+  66% { transform: translateY(-12px) rotate(-0.5deg) translateX(-1px); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); }
+  20% { transform: translateY(-10px) rotate(1.5deg) translateX(4px); }
+  40% { transform: translateY(-18px) rotate(-1.5deg) translateX(-3px); }
+  60% { transform: translateY(-8px) rotate(2deg) translateX(5px); }
+  80% { transform: translateY(-12px) rotate(-1deg) translateX(-2px); }
 }

@@ -17,9 +17,12 @@ const WeddingUploadContent: React.FC = () => {
       <div className="relative z-10">
         <Header />
         
-        <main className="container mx-auto px-4 py-8 md:py-16">
+        <main className="container mx-auto px-3 sm:px-4 py-6 md:py-12 lg:py-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
+            <h2 className={`text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-relaxed py-1 ${
+              // Use gradient text styles per theme via Tailwind dark selector
+              'gradient-text-light dark:gradient-text-dark'
+            }`}>
               {t('upload.title')}
             </h2>
           </div>

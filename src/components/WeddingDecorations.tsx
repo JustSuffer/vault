@@ -129,6 +129,32 @@ const WeddingDecorations: React.FC = () => {
       <div className="absolute top-2/3 right-1/4 floating-decoration" style={{ animationDelay: '-5s' }}>
         <ButterflyIcon className="w-7 h-7 md:w-11 md:h-11" />
       </div>
+
+      {/* Extra floating decorations for more charm */}
+      <div className="absolute top-16 left-1/3 floating-decoration" style={{ animationDelay: '-2s', animation: 'float-slow 10s ease-in-out infinite' }}>
+        <FlowerIcon className="w-6 h-6 md:w-9 md:h-9" />
+      </div>
+      <div className="absolute top-3/4 left-1/4 floating-decoration" style={{ animationDelay: '-4s', animation: 'float-fast 6s ease-in-out infinite' }}>
+        <HeartIcon className="w-6 h-6 md:w-9 md:h-9" />
+      </div>
+      <div className="absolute bottom-1/4 right-1/3 floating-decoration" style={{ animationDelay: '-6s', animation: 'float-slow 12s ease-in-out infinite' }}>
+        <ButterflyIcon className="w-5 h-5 md:w-8 md:h-8" />
+      </div>
+      <div className="absolute top-1/2 left-1/6 floating-decoration" style={{ animationDelay: '-7s', animation: 'float-fast 7s ease-in-out infinite' }}>
+        <FlowerIcon className="w-7 h-7 md:w-10 md:h-10" />
+      </div>
+      <div className="absolute bottom-1/3 right-1/6 floating-decoration" style={{ animationDelay: '-8s', animation: 'float-slow 9s ease-in-out infinite' }}>
+        <HeartIcon className="w-5 h-5 md:w-8 md:h-8" />
+      </div>
+      <div className="absolute top-1/3 right-1/6 floating-decoration" style={{ animationDelay: '-9s', animation: 'float-fast 8s ease-in-out infinite' }}>
+        <ButterflyIcon className="w-6 h-6 md:w-9 md:h-9" />
+      </div>
+      <div className="absolute bottom-1/2 left-1/3 floating-decoration" style={{ animationDelay: '-10s', animation: 'float-slow 11s ease-in-out infinite' }}>
+        <FlowerIcon className="w-5 h-5 md:w-8 md:h-8" />
+      </div>
+      <div className="absolute top-5/6 left-1/2 floating-decoration" style={{ animationDelay: '-11s', animation: 'float-fast 5s ease-in-out infinite' }}>
+        <HeartIcon className="w-7 h-7 md:w-10 md:h-10" />
+      </div>
     </div>
   );
 };
