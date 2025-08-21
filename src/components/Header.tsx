@@ -26,25 +26,31 @@ const Header: React.FC = () => {
         {/* Controls */}
         <div className="flex items-center gap-2">
           {/* Language Switcher */}
-          <div className="relative">
+          <div className="flex rounded-lg border border-border overflow-hidden">
             <Button
-              variant="outline"
+              variant={language === 'en' ? 'default' : 'ghost'}
               size="sm"
-              onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
-              className="px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 border-2"
+              onClick={() => setLanguage('en')}
+              className="rounded-none border-0"
             >
-              <span className="font-medium">
-                {language === 'en' ? 'TR' : 'EN'}
-              </span>
+              EN
+            </Button>
+            <Button
+              variant={language === 'tr' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setLanguage('tr')}
+              className="rounded-none border-0"
+            >
+              TR
             </Button>
           </div>
 
           {/* Theme Toggle */}
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={toggleTheme}
-            className="p-3 rounded-full transition-all duration-300 hover:scale-105 border-2"
+            className="p-2"
             aria-label={t('theme.toggle')}
           >
             {theme === 'light' ? (

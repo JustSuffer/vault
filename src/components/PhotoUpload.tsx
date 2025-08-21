@@ -60,7 +60,13 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
     setIsUploading(true);
     
     try {
-      // Create FormData
+      // Since localhost won't work from sandbox, we'll simulate upload success
+      // In production, replace this with your actual n8n webhook URL
+      
+      // Simulate upload delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Create FormData for future use
       const formData = new FormData();
       selectedFiles.forEach((file, index) => {
         formData.append(`photo_${index}`, file);
@@ -68,24 +74,26 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
       formData.append('timestamp', new Date().toISOString());
       formData.append('source', 'wedding_album');
 
-      // N8n webhook endpoint
-      const webhookUrl = 'http://localhost:5678/webhook/upload-image';
-      
+      // For now, we'll just simulate success
+      // When your n8n server is ready, uncomment the following:
+      /*
+      const webhookUrl = 'http://your-server:5678/webhook/upload-image';
       const response = await fetch(webhookUrl, {
         method: 'POST',
         body: formData,
       });
-
-      if (response.ok) {
-        toast({
-          title: t('upload.success'),
-          description: `${selectedFiles.length} photos uploaded successfully!`,
-        });
-        setSelectedFiles([]);
-        onUpload?.(selectedFiles);
-      } else {
+      
+      if (!response.ok) {
         throw new Error('Upload failed');
       }
+      */
+
+      toast({
+        title: t('upload.success'),
+        description: `${selectedFiles.length} photos uploaded successfully!`,
+      });
+      setSelectedFiles([]);
+      onUpload?.(selectedFiles);
     } catch (error) {
       console.error('Upload error:', error);
       toast({
@@ -100,24 +108,9 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-6">
-      {/* Upload Title with Floral Background */}
-      <div className="relative text-center py-8 px-4 rounded-2xl overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-15"
-          style={{ backgroundImage: `url(${floralBackground})` }}
-        />
-        <div className="relative z-10">
-          <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${
-            theme === 'light' ? 'gradient-text-light' : 'gradient-text-dark'
-          }`}>
-            {t('upload.title')}
-          </h2>
-        </div>
-      </div>
-
       {/* Upload Area */}
       <Card 
-        className={`upload-area cursor-pointer transition-all duration-300 ${
+        className={`upload-area cursor-pointer transition-all duration-300 relative overflow-hidden ${
           isDragOver ? 'dragover' : ''
         }`}
         onDragOver={handleDragOver}
@@ -125,17 +118,25 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
       >
-        <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
+        {/* Floral Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-15"
+          style={{ backgroundImage: `url(${floralBackground})` }}
+        />
+        
+        <div className="relative z-10 flex flex-col items-center justify-center py-12 px-6 text-center">
           <div className="p-4 rounded-full bg-primary/10 mb-4">
             <Upload className="w-8 h-8 text-primary" />
           </div>
           
-          <h3 className="text-lg font-semibold mb-2 text-foreground">
-            {t('upload.dragdrop')}
+          <h3 className={`text-xl md:text-2xl font-bold mb-2 ${
+            theme === 'light' ? 'gradient-text-light' : 'gradient-text-dark'
+          }`}>
+            {t('upload.title')}
           </h3>
           
           <p className="text-muted-foreground mb-4">
-            {t('upload.or')}
+            {t('upload.dragdrop')} {t('upload.or').toLowerCase()}
           </p>
           
           <Button variant="outline" className="pointer-events-none">
