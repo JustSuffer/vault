@@ -76,7 +76,7 @@ All colors MUST be HSL.
   .dark {
     /* Wedding Dark Theme - Dark Gray, Black, Brown */
     --background: 30 15% 8%;
-    --foreground: 0 0% 8%;
+    --foreground: 0 0% 100%;
 
     --card: 30 20% 12%;
     --card-foreground: 0 0% 8%;
