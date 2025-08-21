@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
+import floralBackground from '@/assets/floral-background.jpg';
 
 interface PhotoUploadProps {
   onUpload?: (files: File[]) => void;
@@ -16,6 +18,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -65,8 +68,8 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
       formData.append('timestamp', new Date().toISOString());
       formData.append('source', 'wedding_album');
 
-      // Replace this URL with your n8n webhook endpoint
-      const webhookUrl = 'YOUR_N8N_WEBHOOK_URL_HERE';
+      // N8n webhook endpoint
+      const webhookUrl = 'http://localhost:5678/webhook/upload-image';
       
       const response = await fetch(webhookUrl, {
         method: 'POST',
@@ -97,6 +100,21 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-6">
+      {/* Upload Title with Floral Background */}
+      <div className="relative text-center py-8 px-4 rounded-2xl overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-15"
+          style={{ backgroundImage: `url(${floralBackground})` }}
+        />
+        <div className="relative z-10">
+          <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${
+            theme === 'light' ? 'gradient-text-light' : 'gradient-text-dark'
+          }`}>
+            {t('upload.title')}
+          </h2>
+        </div>
+      </div>
+
       {/* Upload Area */}
       <Card 
         className={`upload-area cursor-pointer transition-all duration-300 ${

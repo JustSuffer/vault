@@ -104,6 +104,9 @@ const WeddingDecorations: React.FC = () => {
       <div className="absolute top-1/2 right-12 floating-decoration">
         <ButterflyIcon className="w-12 h-12" />
       </div>
+      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 floating-decoration">
+        <ButterflyIcon className="w-8 h-8 md:w-12 md:h-12" />
+      </div>
 
       {/* Bottom decorations */}
       <div className="absolute bottom-20 left-16 floating-decoration">
@@ -116,9 +119,15 @@ const WeddingDecorations: React.FC = () => {
         <HeartIcon className="w-12 h-12" />
       </div>
 
-      {/* Additional mobile-friendly decorations */}
-      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 floating-decoration">
-        <ButterflyIcon className="w-8 h-8 md:w-12 md:h-12" />
+      {/* Additional floating butterflies for smoother movement */}
+      <div className="absolute top-1/4 right-1/3 floating-decoration" style={{ animationDelay: '-1s' }}>
+        <ButterflyIcon className="w-6 h-6 md:w-10 md:h-10" />
+      </div>
+      <div className="absolute bottom-1/3 left-1/3 floating-decoration" style={{ animationDelay: '-3s' }}>
+        <ButterflyIcon className="w-8 h-8 md:w-14 md:h-14" />
+      </div>
+      <div className="absolute top-2/3 right-1/4 floating-decoration" style={{ animationDelay: '-5s' }}>
+        <ButterflyIcon className="w-7 h-7 md:w-11 md:h-11" />
       </div>
     </div>
   );

@@ -10,25 +10,25 @@ All colors MUST be HSL.
   :root {
     /* Wedding Light Theme - Pink, White, Light Blue */
     --background: 340 100% 98%;
-    --foreground: 340 30% 15%;
+    --foreground: 200 100% 40%;
 
     --card: 0 0% 100%;
-    --card-foreground: 340 30% 15%;
+    --card-foreground: 200 100% 40%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 340 30% 15%;
+    --popover-foreground: 200 100% 40%;
 
     --primary: 340 82% 52%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 200 100% 95%;
-    --secondary-foreground: 340 30% 15%;
+    --secondary-foreground: 200 100% 40%;
 
     --muted: 340 20% 95%;
     --muted-foreground: 340 10% 45%;
 
     --accent: 340 60% 88%;
-    --accent-foreground: 340 30% 15%;
+    --accent-foreground: 200 100% 40%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -46,6 +46,7 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-romantic: linear-gradient(135deg, hsl(340 82% 52%) 0%, hsl(200 100% 85%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(340 100% 98%) 0%, hsl(340 60% 96%) 100%);
+    --gradient-text-light: linear-gradient(135deg, hsl(200 100% 40%) 0%, hsl(340 82% 52%) 100%);
 
     --radius: 1rem;
 
@@ -69,25 +70,25 @@ All colors MUST be HSL.
   .dark {
     /* Wedding Dark Theme - Dark Gray, Black, Brown */
     --background: 30 15% 8%;
-    --foreground: 30 20% 95%;
+    --foreground: 0 0% 8%;
 
     --card: 30 20% 12%;
-    --card-foreground: 30 20% 95%;
+    --card-foreground: 0 0% 8%;
 
     --popover: 30 20% 12%;
-    --popover-foreground: 30 20% 95%;
+    --popover-foreground: 0 0% 8%;
 
     --primary: 30 20% 85%;
     --primary-foreground: 30 15% 8%;
 
     --secondary: 30 15% 15%;
-    --secondary-foreground: 30 20% 95%;
+    --secondary-foreground: 0 0% 8%;
 
     --muted: 30 15% 15%;
     --muted-foreground: 30 10% 65%;
 
     --accent: 30 25% 20%;
-    --accent-foreground: 30 20% 95%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 30 20% 95%;
@@ -101,10 +102,12 @@ All colors MUST be HSL.
     --wedding-brown: 30 25% 20%;
     --wedding-gray: 0 0% 25%;
     --wedding-light: 30 20% 95%;
+    --wedding-gold: 45 100% 70%;
     
     /* Dark gradients */
     --gradient-romantic: linear-gradient(135deg, hsl(30 25% 20%) 0%, hsl(0 0% 15%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(30 15% 8%) 0%, hsl(30 20% 12%) 100%);
+    --gradient-text-dark: linear-gradient(135deg, hsl(0 0% 8%) 0%, hsl(45 100% 70%) 100%);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -146,7 +149,7 @@ All colors MUST be HSL.
   }
   
   .floating-decoration {
-    animation: float 6s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
   }
   
   .floating-decoration:nth-child(2) {
@@ -156,10 +159,37 @@ All colors MUST be HSL.
   .floating-decoration:nth-child(3) {
     animation-delay: -4s;
   }
+  
+  .floating-decoration:nth-child(4) {
+    animation-delay: -6s;
+  }
+  
+  .gradient-text-light {
+    background: var(--gradient-text-light);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-text-dark {
+    background: var(--gradient-text-dark);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .floral-background {
+    background-image: url('/src/assets/floral-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(2deg); }
-  66% { transform: translateY(5px) rotate(-1deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); }
+  25% { transform: translateY(-8px) rotate(1deg) translateX(3px); }
+  50% { transform: translateY(-15px) rotate(-1deg) translateX(-2px); }
+  75% { transform: translateY(-5px) rotate(2deg) translateX(4px); }
 }

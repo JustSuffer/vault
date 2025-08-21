@@ -16,7 +16,9 @@ const Header: React.FC = () => {
           <div className="p-2 rounded-full bg-primary/10">
             <Camera className="w-6 h-6 text-primary" />
           </div>
-          <h1 className="text-xl md:text-2xl font-bold text-foreground">
+          <h1 className={`text-xl md:text-2xl font-bold ${
+            theme === 'light' ? 'gradient-text-light' : 'gradient-text-dark'
+          }`}>
             {t('wedding.album')}
           </h1>
         </div>
@@ -24,31 +26,25 @@ const Header: React.FC = () => {
         {/* Controls */}
         <div className="flex items-center gap-2">
           {/* Language Switcher */}
-          <div className="flex rounded-lg border border-border overflow-hidden">
+          <div className="relative">
             <Button
-              variant={language === 'en' ? 'default' : 'ghost'}
+              variant="outline"
               size="sm"
-              onClick={() => setLanguage('en')}
-              className="rounded-none border-0"
+              onClick={() => setLanguage(language === 'en' ? 'tr' : 'en')}
+              className="px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 border-2"
             >
-              EN
-            </Button>
-            <Button
-              variant={language === 'tr' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setLanguage('tr')}
-              className="rounded-none border-0"
-            >
-              TR
+              <span className="font-medium">
+                {language === 'en' ? 'TR' : 'EN'}
+              </span>
             </Button>
           </div>
 
           {/* Theme Toggle */}
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={toggleTheme}
-            className="p-2"
+            className="p-3 rounded-full transition-all duration-300 hover:scale-105 border-2"
             aria-label={t('theme.toggle')}
           >
             {theme === 'light' ? (
