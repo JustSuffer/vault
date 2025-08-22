@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { supabase } from '@/integrations/supabase/client';
 import floralBackground from '@/assets/floral-background.jpg';
 
 interface PhotoUploadProps {
@@ -62,59 +63,26 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onUpload }) => {
     setIsUploading(true);
     
     try {
-      // Create FormData for n8n webhook
-      const formData = new FormData();
-      
-      // Add each file to FormData - n8n expects files in binary format
-      selectedFiles.forEach((file, index) => {
-        formData.append('file', file); // n8n form trigger expects 'file' field
+      const uploadPromises = selectedFiles.map(async (file) => {
+        const fileName = `${Date.now()}-${file.name}`;
+        
+        const { data, error } = await supabase.storage
+          .from('wedding-photos')
+          .upload(fileName, file);
+
+        if (error) {
+          throw new Error(`Failed to upload ${file.name}: ${error.message}`);
+        }
+
+        return data;
       });
-      
-      // Add metadata
-      formData.append('timestamp', new Date().toISOString());
-      formData.append('source', 'wedding_album');
-      formData.append('totalFiles', selectedFiles.length.toString());
 
-      // Send to n8n webhook - configurable for different environments
-      const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://localhost:5678/form/675ae670-eba6-44f9-83bd-ca23137f40b2';
-      
-      console.log('Attempting to upload to:', webhookUrl);
-      console.log('Files to upload:', selectedFiles.map(f => ({ name: f.name, size: f.size, type: f.type })));
-      
-      try {
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          body: formData,
-        });
-        
-        console.log('Response status:', response.status);
-        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-        
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Upload failed with response:', errorText);
-          throw new Error(`Upload failed: ${response.status} ${response.statusText} - ${errorText}`);
-        }
-
-        const result = await response.json();
-        console.log('Upload successful:', result);
-      } catch (fetchError) {
-        console.error('Fetch error details:', fetchError);
-        if (fetchError instanceof TypeError && fetchError.message.includes('fetch')) {
-          throw new Error('Cannot connect to upload server. Please check if n8n is running and accessible.');
-        }
-        
-        // Check if it's a 404 error (workflow not active)
-        if (fetchError.message.includes('404')) {
-          throw new Error('Upload service not available. Please ensure the n8n workflow is activated.');
-        }
-        
-        throw fetchError;
-      }
+      const results = await Promise.all(uploadPromises);
+      console.log('Upload successful:', results);
       
       toast({
         title: t('upload.success'),
-        description: `${selectedFiles.length} photos uploaded successfully to Google Drive!`,
+        description: `${selectedFiles.length} photos uploaded successfully to Supabase Storage!`,
       });
       
       // Reset all states after successful upload
